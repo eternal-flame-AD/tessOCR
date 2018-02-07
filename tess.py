@@ -1,10 +1,12 @@
 import tempfile
 import subprocess
+import os
 from PIL import Image
+
 class tess:
-    def __init__(self,img,tessdir=""):
+    def __init__(self,tessdir=""):
         self.tessdir=tessdir
-        self.img=img
+        self.imgdir=""
         self.lang=[]
         self.addconf=False
         self.mode=False
@@ -15,11 +17,21 @@ class tess:
             self.tessdir=tessdir
         self.tessdir+="\\"
         self.init_workdir()
-        self.prepare_img()
     
-    def prepare_img(self):
-        self.imgdir=self.workdir+"img.bmp"
-        self.img.save(self.imgdir)
+    def load_img(self,img):
+        print(type(img))
+        if type(img)==type("str"):
+            try:
+                img.index("\\")
+                self.imgdir=img
+            except:
+                self.imgdir=os.getcwd()+"\\"+img
+        else:
+            try:
+                self.imgdir=self.workdir+"img.bmp"
+                img.save(self.imgdir)
+            except:
+                raise RuntimeError("Cannot parse Image")
 
     def init_workdir(self):
         self.temp=tempfile.TemporaryDirectory("","tessocr-")
@@ -43,6 +55,9 @@ class tess:
     
     def add_language(self,lang):
         self.lang.append(lang)
+    
+    def del_language(self):
+        self.lang=[]
     
     def set_chars(self,charset):
         self.addconf=True
