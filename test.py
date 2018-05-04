@@ -1,7 +1,7 @@
 from tess import tess
 from PIL import Image
 #im=Image.open("test.png")
-p=tess()
+p = tess()
 p.load_img("test.png")
 p.add_language("eng")
 p.set_mode("line")
