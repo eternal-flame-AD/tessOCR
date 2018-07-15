@@ -4,7 +4,7 @@ import os
 from PIL import Image
 
 
-class tess:
+class Tess:
     def __init__(self, tessdir=""):
         self.tessdir = tessdir
         self.imgdir = ""
@@ -20,7 +20,6 @@ class tess:
         self.init_workdir()
 
     def load_img(self, img):
-        print(type(img))
         if type(img) == type("str"):
             try:
                 img.index("\\")
